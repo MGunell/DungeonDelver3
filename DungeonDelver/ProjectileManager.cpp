@@ -1,16 +1,18 @@
 #include "ProjectileManager.h"
+#include "Room.h"
+#include "EnemyManager.h"
 #include <cassert>
+int Slimes = 1;
 
 ProjectileManager::ProjectileManager()
 {
-	used = -1;
+	used = 0;
 	index = 0;
-	projectiles = new Projectile[50];
+	projectiles = new Projectile[1000];
 }
 
 void ProjectileManager::start() {
-	if (used == 0) index = 1;
-	else index = 0;
+	 index = 0;
 }
 
 void ProjectileManager::advance()
@@ -19,33 +21,86 @@ void ProjectileManager::advance()
 	index++;
 }
 
-void ProjectileManager::renderAll(SDL_Rect& camera, SDL_Renderer* gRenderer, BaseNpc* enemy[])
+void ProjectileManager::moveAll(SDL_Rect& camera, SDL_Renderer* gRenderer, EnemyManager* eM, Room* room, Player* player)
 {
-	if (used > -1) {
 		for (int i = 0; i < used; i++)
-		{
-			for (int j = 0; j < 3; j++)
-			{
-				if (projectiles[i].move(enemy[j]) == true)
+		{	
+				projectiles[i].move(room);
+				if (projectiles[i].checkCollide(eM) ==false)
 				{
-					projectiles[i].renderProjectile(camera, gRenderer);
+					projectiles[i].renderProjectile(camera, gRenderer, player, room->rotation);
+				}
+				else
+				{
+					if (i != used - 1)
+					{
+						projectiles[i] = projectiles[used - 1];
+						used--;
+						index--;
+						//move the last projectile in the list into the first unused one
+					}
+				}
+		}
+}
+			
 
+
+void ProjectileManager::moveAllEnemy(SDL_Rect& camera, SDL_Renderer* gRenderer, Player& player, Room* room)
+{
+	for (int i = 0; i < used; i++)
+	{
+		for (int j = 0; j < 1; j++)
+		{
+			if (projectiles[i].enemyMove(player))
+			{
+				//do nothing, used to be render
+			}
+			else
+			{
+				if (i != used - 1)
+				{
+					projectiles[i] = projectiles[used - 1];
+					used--;
+					index--;
+					//move the last projectile in the list into the first unused one
 				}
 			}
-			
 		}
 	}
-			
+
 }
 
-void ProjectileManager::insert(double angle, int x, int y, double velX, double velY, int damage)
+void ProjectileManager::renderAll(SDL_Rect& camera, SDL_Renderer* gRenderer, Player& player, Room* room)
 {
-	projectiles[index] = Projectile(angle - 90, x, y, velX, velY, 25 + damage);
+	for (int i = 0; i < used; i++)
+	{
+		for (int j = 0; j < 1; j++)
+		{
+			projectiles[i].renderProjectile(camera, gRenderer, &player, room->rotation);
+		}
+	}
+}
+
+void ProjectileManager::insert(double angle, int x, int y, double velX, double velY, int damage, int range1, int mtype1, int speed)
+{
+	
+	projectiles[index] = Projectile(true, angle, x, y , velX, velY, damage, range1, speed, mtype1);
 	//projectiles[index].setAngle(angle - 90);
-	if (used <= 0) used = 1;
-	else used++;
+	used++;
 	index++;
-	if (index >= 10)//capacity - 1)
+	if (index >= capacity)
+	{
+		index = 0;
+	}
+	//std::cout << "insterted a projectile" << "used " << used << " index " << index-1 << std::endl;
+}
+
+void ProjectileManager::insert(Projectile* projectile)
+{
+	projectiles[index] = *projectile;
+	used++;
+	index++;
+	if (index >= capacity)
 	{
 		index = 0;
 	}

@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{5A7354D9-A0E5-42C0-BF9E-6A0681229A20}</ProjectGuid>
     <RootNamespace>DungeonDelver</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.14393.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -90,6 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -102,6 +103,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_mixer.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -140,30 +142,63 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseNpc.cpp" />
+    <ClCompile Include="BossSlime.cpp" />
+    <ClCompile Include="Bow.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Equipment_Inventory.cpp" />
+    <ClCompile Include="HyperCube.cpp" />
+    <ClCompile Include="InventoryRedux.cpp" />
+    <ClCompile Include="LevelGenerator.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="Engine.cpp" />
-    <ClCompile Include="FireStaff1.cpp" />
     <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="ProjectileManager.cpp" />
+    <ClCompile Include="RenderableManager.cpp" />
+    <ClCompile Include="RPotion.cpp" />
+    <ClCompile Include="Sword.cpp" />
     <ClCompile Include="Tile.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3D_Engine.h" />
     <ClInclude Include="BaseNpc.h" />
+    <ClInclude Include="BossSlime.h" />
+    <ClInclude Include="Bow.h" />
+    <ClInclude Include="Core.h" />
+    <ClInclude Include="EnemyManager.h" />
     <ClInclude Include="Engine.h" />
-    <ClInclude Include="FireStaff1.h" />
+    <ClInclude Include="Equipment_Inventory.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Level.h" />
+    <ClInclude Include="LevelGenerator.h" />
+    <ClInclude Include="Level_Creation.h" />
+    <ClInclude Include="Note.h" />
+    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="Room.h" />
+    <ClInclude Include="Sword.h" />
+    <ClInclude Include="HyperCube.h" />
+    <ClInclude Include="InventoryRedux.h" />
+    <ClInclude Include="LPolygon.h" />
+    <ClInclude Include="NewProjectile.h" />
+    <ClInclude Include="RenderableManager.h" />
+    <ClInclude Include="Renderable.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="LTexture.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
     <ClInclude Include="ProjectileManager.h" />
+    <ClInclude Include="RPotion.h" />
     <ClInclude Include="Selected.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileManager.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Wisp.h" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="fonts\jupiter.mp3" />
@@ -194,8 +229,10 @@
     <Image Include="images\characters.png" />
     <Image Include="images\levelone.png" />
     <Image Include="images\Pizza.png" />
+    <Image Include="images\potions.png" />
     <Image Include="images\projectiles.png" />
     <Image Include="images\rat.png" />
+    <Image Include="images\tiles.png" />
     <Image Include="images\Untitled.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

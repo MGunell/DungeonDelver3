@@ -1,14 +1,24 @@
-#pragma once
-#include "Projectile.h"
-class Projectile;
+#ifndef __ProjectileManager__
+#define __ProjectileManager__
+
 class BaseNpc;
-class ProjectileManager
-{
+class Player;
+class Projectile;
+class EnemyManager;
+#include "Projectile.h"
+#include "SDL.h"
+
+
+class ProjectileManager {
 public:
 	ProjectileManager();
-	static const int capacity = 100;
-	void renderAll(SDL_Rect& camera, SDL_Renderer* gRenderer, BaseNpc* enemy[]);
-	void insert(double angle, int x,int y, double velX, double velY, int damage);
+	const int capacity = 1000;
+	void moveAll(SDL_Rect& camera, SDL_Renderer* gRenderer, EnemyManager* eM, Room* room, Player* player);
+	void moveAllEnemy(SDL_Rect& camera, SDL_Renderer* gRenderer, Player& player, Room* room);
+
+	void renderAll(SDL_Rect& camera, SDL_Renderer* gRenderer, Player& player, Room* room);
+	void insert(double angle, int x,int y, double velX, double velY, int damage, int range1 = 5, int mtype1 = 0, int speed = 5);
+	void insert(Projectile* projectile);
 	void remove_current();
 	void start();
 	void advance();
@@ -17,3 +27,4 @@ private:
 	int used;
 	int index;
 };
+#endif
